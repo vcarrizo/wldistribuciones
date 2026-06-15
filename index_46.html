@@ -1,0 +1,611 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>W&L Distribuciones — Productos de Limpieza al por Mayor en Misiones</title>
+  <meta name="description" content="Distribuidor mayorista de productos de limpieza en Misiones, Argentina. Las mejores marcas con entrega en toda la provincia.">
+  <meta name="keywords" content="productos de limpieza mayorista, distribuidor limpieza Misiones, limpieza por mayor Posadas, proveedor limpieza Argentina">
+  <meta property="og:title" content="W&L Distribuciones — Productos de Limpieza al por Mayor">
+  <meta property="og:description" content="Distribuidor mayorista de productos de limpieza en Misiones. Las mejores marcas, los mejores precios.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://wldistribuciones.com">
+  <link rel="icon" type="image/png" href="logo.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@700&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    :root {
+      --navy: #0B1226;
+      --blue: #0D8BF0;
+      --purple: #7C3AED;
+      --magenta: #D6336C;
+      --gradient: linear-gradient(135deg, #0D8BF0, #7C3AED, #D6336C);
+      --gradient-btn: linear-gradient(135deg, #0D8BF0, #7C3AED);
+      --ice: #F2F4F8;
+      --white: #FFFFFF;
+      --text: #2D3748;
+      --text-light: #64748B;
+      --radius: 14px;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Inter', system-ui, sans-serif;
+      color: var(--text);
+      background: var(--white);
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      z-index: 100;
+      background: rgba(255,255,255,0.92);
+      backdrop-filter: blur(14px);
+      border-bottom: 1px solid rgba(0,0,0,0.06);
+    }
+
+    .nav-inner {
+      max-width: 1120px;
+      margin: 0 auto;
+      padding: 0.75rem 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .nav-logo {
+      height: 48px;
+      width: auto;
+    }
+
+    .nav-cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: var(--gradient-btn);
+      color: var(--white);
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 0.875rem;
+      padding: 0.6rem 1.4rem;
+      border-radius: 100px;
+      transition: opacity 0.2s, transform 0.2s;
+    }
+
+    .nav-cta:hover {
+      opacity: 0.9;
+      transform: translateY(-1px);
+    }
+
+    /* ── HERO ── */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      padding: 7rem 2rem 4rem;
+      background: var(--navy);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: -30%;
+      right: -15%;
+      width: 800px;
+      height: 800px;
+      background: radial-gradient(circle, rgba(124,58,237,0.15) 0%, transparent 65%);
+      border-radius: 50%;
+      pointer-events: none;
+    }
+
+    .hero::after {
+      content: '';
+      position: absolute;
+      bottom: -20%;
+      left: -10%;
+      width: 600px;
+      height: 600px;
+      background: radial-gradient(circle, rgba(13,139,240,0.1) 0%, transparent 65%);
+      border-radius: 50%;
+      pointer-events: none;
+    }
+
+    .hero-inner {
+      max-width: 1120px;
+      margin: 0 auto;
+      width: 100%;
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 4rem;
+      align-items: center;
+      position: relative;
+      z-index: 1;
+    }
+
+    .hero-content h1 {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: clamp(2.25rem, 5vw, 3.5rem);
+      font-weight: 700;
+      color: var(--white);
+      line-height: 1.1;
+      letter-spacing: -1px;
+      margin-bottom: 1.25rem;
+    }
+
+    .hero-content h1 em {
+      font-style: normal;
+      background: var(--gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .hero-content p {
+      font-size: 1.125rem;
+      color: rgba(255,255,255,0.6);
+      line-height: 1.7;
+      max-width: 500px;
+      margin-bottom: 2rem;
+    }
+
+    .hero-cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.75rem;
+      background: var(--gradient-btn);
+      color: var(--white);
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 1.05rem;
+      padding: 1rem 2.25rem;
+      border-radius: 100px;
+      transition: opacity 0.2s, transform 0.2s;
+    }
+
+    .hero-cta:hover {
+      opacity: 0.9;
+      transform: translateY(-2px);
+    }
+
+    .hero-cta svg {
+      width: 22px;
+      height: 22px;
+      fill: currentColor;
+    }
+
+    .hero-logo-side {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .hero-logo-side img {
+      width: 85%;
+      max-width: 400px;
+      height: auto;
+      filter: drop-shadow(0 20px 40px rgba(124,58,237,0.2));
+    }
+
+    /* ── STATS ── */
+    .stats {
+      background: var(--white);
+      padding: 3.5rem 2rem;
+      border-bottom: 1px solid rgba(0,0,0,0.06);
+    }
+
+    .stats-inner {
+      max-width: 1120px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2rem;
+      text-align: center;
+    }
+
+    .stat-number {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 2.75rem;
+      font-weight: 700;
+      background: var(--gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      line-height: 1;
+      margin-bottom: 0.35rem;
+    }
+
+    .stat-label {
+      font-size: 0.85rem;
+      color: var(--text-light);
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+    }
+
+    /* ── MARCAS ── */
+    .brands {
+      padding: 5rem 2rem;
+      background: var(--ice);
+    }
+
+    .brands-inner {
+      max-width: 1120px;
+      margin: 0 auto;
+    }
+
+    .section-label {
+      font-size: 0.8rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      background: var(--gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 0.75rem;
+    }
+
+    .section-title {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: clamp(1.75rem, 3vw, 2.25rem);
+      font-weight: 700;
+      color: var(--navy);
+      letter-spacing: -0.5px;
+      margin-bottom: 3rem;
+    }
+
+    .rubros-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1.5rem;
+    }
+
+    .rubro-card {
+      position: relative;
+      border-radius: var(--radius);
+      overflow: hidden;
+      aspect-ratio: 1/1;
+      cursor: pointer;
+    }
+
+    .rubro-card img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.4s ease;
+    }
+
+    .rubro-card:hover img {
+      transform: scale(1.05);
+    }
+
+    .rubro-card .rubro-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(11,18,38,0.6) 0%, transparent 50%);
+      pointer-events: none;
+    }
+
+    .rubro-card .rubro-label {
+      position: absolute;
+      bottom: 1.25rem;
+      left: 1.25rem;
+      color: var(--white);
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 1.25rem;
+      font-weight: 700;
+      letter-spacing: -0.3px;
+    }
+
+    /* ── COBERTURA ── */
+    .coverage {
+      padding: 5rem 2rem;
+      background: var(--white);
+    }
+
+    .coverage-inner {
+      max-width: 1120px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: start;
+    }
+
+    .coverage-list {
+      list-style: none;
+      display: grid;
+      gap: 1rem;
+    }
+
+    .coverage-list li {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      font-size: 1.05rem;
+      color: var(--text);
+    }
+
+    .check-icon {
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      background: var(--gradient-btn);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .check-icon svg {
+      width: 14px;
+      height: 14px;
+      fill: white;
+    }
+
+    /* ── CTA FINAL ── */
+    .final-cta {
+      padding: 5rem 2rem;
+      background: var(--navy);
+      text-align: center;
+    }
+
+    .final-cta-inner {
+      max-width: 640px;
+      margin: 0 auto;
+    }
+
+    .final-cta h2 {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: clamp(1.75rem, 3vw, 2.5rem);
+      font-weight: 700;
+      color: var(--white);
+      letter-spacing: -0.5px;
+      margin-bottom: 1rem;
+    }
+
+    .final-cta p {
+      font-size: 1.1rem;
+      color: rgba(255,255,255,0.55);
+      line-height: 1.7;
+      margin-bottom: 2rem;
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      background: var(--navy);
+      padding: 2rem 2rem;
+      text-align: center;
+      border-top: 1px solid rgba(255,255,255,0.06);
+    }
+
+    footer p {
+      color: rgba(255,255,255,0.3);
+      font-size: 0.85rem;
+    }
+
+    footer a {
+      color: var(--blue);
+      text-decoration: none;
+    }
+
+    /* ── WHATSAPP FLOAT ── */
+    .wa-float {
+      position: fixed;
+      bottom: 2rem;
+      right: 2rem;
+      z-index: 200;
+      width: 60px;
+      height: 60px;
+      background: #25D366;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 4px 20px rgba(37,211,102,0.4);
+      transition: transform 0.2s, box-shadow 0.2s;
+      text-decoration: none;
+    }
+
+    .wa-float:hover {
+      transform: scale(1.1);
+      box-shadow: 0 6px 28px rgba(37,211,102,0.5);
+    }
+
+    .wa-float svg {
+      width: 32px;
+      height: 32px;
+      fill: white;
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 768px) {
+      .hero-inner {
+        grid-template-columns: 1fr;
+        gap: 2.5rem;
+        text-align: center;
+      }
+
+      .hero-content p {
+        margin-left: auto;
+        margin-right: auto;
+      }
+
+      .hero-logo-side {
+        order: -1;
+      }
+
+      .hero-logo-side img {
+        width: 55%;
+      }
+
+      .stats-inner {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+      }
+
+      .coverage-inner {
+        grid-template-columns: 1fr;
+        gap: 3rem;
+      }
+
+      .rubros-grid {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+      }
+
+      .rubro-card {
+        aspect-ratio: 16/10;
+      }
+
+      .nav-cta span { display: none; }
+
+      .nav-logo { height: 40px; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      * { transition: none !important; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <div class="nav-inner">
+      <img src="logo.png" alt="W&L Distribuciones" class="nav-logo">
+      <a href="https://wa.me/54XXXXXXXXXX?text=Hola%2C%20quiero%20consultar%20por%20productos%20mayoristas" class="nav-cta" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.125.553 4.12 1.52 5.855L0 24l6.335-1.652A11.94 11.94 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.82a9.78 9.78 0 01-5.29-1.545l-.38-.226-3.938 1.03 1.052-3.84-.248-.394A9.78 9.78 0 012.18 12 9.82 9.82 0 0112 2.18 9.82 9.82 0 0121.82 12 9.82 9.82 0 0112 21.82z"/></svg>
+        <span>Consultá ahora</span>
+      </a>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-inner">
+      <div class="hero-content">
+        <h1>Productos de limpieza <em>al por mayor</em> en Misiones</h1>
+        <p>Distribuimos las mejores marcas del mercado con entrega en toda la provincia. Precios mayoristas, stock permanente y atención directa.</p>
+        <a href="https://wa.me/54XXXXXXXXXX?text=Hola%2C%20quiero%20consultar%20por%20productos%20mayoristas" class="hero-cta" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.125.553 4.12 1.52 5.855L0 24l6.335-1.652A11.94 11.94 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.82a9.78 9.78 0 01-5.29-1.545l-.38-.226-3.938 1.03 1.052-3.84-.248-.394A9.78 9.78 0 012.18 12 9.82 9.82 0 0112 2.18 9.82 9.82 0 0121.82 12 9.82 9.82 0 0112 21.82z"/></svg>
+          Pedí tu lista de precios
+        </a>
+      </div>
+      <div class="hero-logo-side">
+        <img src="logo.png" alt="W&L Distribuciones">
+      </div>
+    </div>
+  </section>
+
+  <!-- STATS -->
+  <section class="stats">
+    <div class="stats-inner">
+      <div>
+        <div class="stat-number">+200</div>
+        <div class="stat-label">Productos</div>
+      </div>
+      <div>
+        <div class="stat-number">+50</div>
+        <div class="stat-label">Marcas</div>
+      </div>
+      <div>
+        <div class="stat-number">+10</div>
+        <div class="stat-label">Años en el mercado</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- MARCAS -->
+  <section class="brands" id="rubros">
+    <div class="brands-inner">
+      <div class="section-label">Soluciones</div>
+      <h2 class="section-title">Productos para cada necesidad</h2>
+      <div class="rubros-grid">
+        <div class="rubro-card">
+          <img src="hogar.jpg" alt="Limpieza para el Hogar" loading="lazy">
+          <div class="rubro-overlay"></div>
+          <span class="rubro-label">Hogar</span>
+        </div>
+        <div class="rubro-card">
+          <img src="automotor.jpg" alt="Limpieza Automotriz" loading="lazy">
+          <div class="rubro-overlay"></div>
+          <span class="rubro-label">Automotor</span>
+        </div>
+        <div class="rubro-card">
+          <img src="institucional.jpg" alt="Soluciones Institucionales" loading="lazy">
+          <div class="rubro-overlay"></div>
+          <span class="rubro-label">Institucional</span>
+        </div>
+        <div class="rubro-card">
+          <img src="piscinas.jpg" alt="Limpieza y Mantenimiento de Piscinas" loading="lazy">
+          <div class="rubro-overlay"></div>
+          <span class="rubro-label">Piscinas</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- COBERTURA + RAZONES -->
+  <section class="coverage">
+    <div class="coverage-inner">
+      <div>
+        <div class="section-label">Cobertura</div>
+        <h2 class="section-title">Entrega en toda la provincia</h2>
+        <ul class="coverage-list">
+          <li><span class="check-icon"><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg></span> Posadas y zona metropolitana</li>
+          <li><span class="check-icon"><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg></span> Oberá, Eldorado, Iguazú</li>
+          <li><span class="check-icon"><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg></span> Apóstoles, San Vicente, Montecarlo</li>
+          <li><span class="check-icon"><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg></span> Toda Misiones con logística propia</li>
+        </ul>
+      </div>
+      <div>
+        <div class="section-label">Ventajas</div>
+        <h2 class="section-title">Tu proveedor de confianza</h2>
+        <ul class="coverage-list">
+          <li><span class="check-icon"><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg></span> Precios mayoristas reales</li>
+          <li><span class="check-icon"><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg></span> Stock permanente y variedad</li>
+          <li><span class="check-icon"><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg></span> Entrega rápida y puntual</li>
+          <li><span class="check-icon"><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg></span> Atención personalizada por WhatsApp</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA FINAL -->
+  <section class="final-cta">
+    <div class="final-cta-inner">
+      <h2>¿Listo para abastecer tu negocio?</h2>
+      <p>Escribinos por WhatsApp y recibí nuestra lista de precios actualizada. Sin compromiso, respuesta inmediata.</p>
+      <a href="https://wa.me/54XXXXXXXXXX?text=Hola%2C%20quiero%20recibir%20la%20lista%20de%20precios%20mayorista" class="hero-cta" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.125.553 4.12 1.52 5.855L0 24l6.335-1.652A11.94 11.94 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.82a9.78 9.78 0 01-5.29-1.545l-.38-.226-3.938 1.03 1.052-3.84-.248-.394A9.78 9.78 0 012.18 12 9.82 9.82 0 0112 2.18 9.82 9.82 0 0121.82 12 9.82 9.82 0 0112 21.82z"/></svg>
+        Escribinos por WhatsApp
+      </a>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <p>&copy; 2026 W&L Distribuciones — Misiones, Argentina &nbsp;·&nbsp; <a href="https://wa.me/54XXXXXXXXXX">WhatsApp</a></p>
+  </footer>
+
+  <!-- WHATSAPP FLOTANTE -->
+  <a href="https://wa.me/54XXXXXXXXXX?text=Hola%2C%20quiero%20consultar%20por%20productos%20mayoristas" class="wa-float" target="_blank" rel="noopener" aria-label="Contactar por WhatsApp">
+    <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.125.553 4.12 1.52 5.855L0 24l6.335-1.652A11.94 11.94 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.82a9.78 9.78 0 01-5.29-1.545l-.38-.226-3.938 1.03 1.052-3.84-.248-.394A9.78 9.78 0 012.18 12 9.82 9.82 0 0112 2.18 9.82 9.82 0 0121.82 12 9.82 9.82 0 0112 21.82z"/></svg>
+  </a>
+
+</body>
+</html>
