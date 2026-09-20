@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Catálogo de productos — WL Distribuciones</title>
+<meta name="description" content="Catálogo completo de WL Distribuciones: detergentes, desengrasantes, lavandina, químicos de pileta, limpieza automotor y más. Consultá precio por WhatsApp.">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<header class="site-header">
+  <div class="wrap">
+    <a href="index.html" class="logo">
+      <span class="logo-mark">WL</span>
+      Distribuciones <span class="logo-sub">· Posadas, Misiones</span>
+    </a>
+    <nav class="main-nav">
+      <div class="nav-links">
+        <a href="index.html#categorias">Categorías</a>
+        <a href="catalogo.html">Catálogo</a>
+        <a href="index.html#nosotros">Nosotros</a>
+      </div>
+      <a href="https://wa.me/5493764820457?text=Hola%2C%20quiero%20hacer%20una%20consulta" class="nav-cta" target="_blank" rel="noopener"></a>
+    </nav>
+  </div>
+</header>
+
+<section class="catalog-intro">
+  <div class="wrap">
+    <h1>Catálogo de productos</h1>
+    <p class="lead">85 productos organizados en 9 categorías. Elegí lo que necesitás y consultá precio y disponibilidad directo por WhatsApp — no vendemos online todavía, pero coordinamos la compra en minutos.</p>
+    <div class="search-row">
+      <input type="text" class="search-input" id="searchInput" placeholder="Buscar producto, por ejemplo: lavandina, jabón, pileta…" autocomplete="off">
+      <span class="search-count" id="searchCount"></span>
+    </div>
+  </div>
+</section>
+
+<nav class="cat-tabs" id="catTabs">
+  <div class="wrap"></div>
+</nav>
+
+<main id="catalogRoot"></main>
+
+<p class="no-results wrap" id="noResults">No encontramos productos que coincidan con tu búsqueda. Probá con otra palabra o <a href="https://wa.me/5493764820457?text=Hola%2C%20estoy%20buscando%20un%20producto%20que%20no%20encuentro%20en%20el%20cat%C3%A1logo" target="_blank" rel="noopener" style="color:var(--magenta); font-weight:600;">consultanos por WhatsApp</a>.</p>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <div class="footer-grid">
+      <div>
+        <h4>WL Distribuciones</h4>
+        <p>Distribución mayorista y minorista de productos de limpieza en Posadas, Misiones.</p>
+      </div>
+      <div>
+        <h4>Categorías</h4>
+        <ul id="footerCats"></ul>
+      </div>
+      <div>
+        <h4>Contacto</h4>
+        <ul>
+          <li><a href="https://wa.me/5493764820457" target="_blank" rel="noopener">WhatsApp: +54 9 3764 82-0457</a></li>
+          <li><a href="index.html">Volver al inicio</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© <span id="year"></span> WL Distribuciones</span>
+      <span>Posadas, Misiones, Argentina</span>
+    </div>
+  </div>
+</footer>
+
+<script src="icons.js"></script>
+<script src="products-data.js"></script>
+<script>
+  document.getElementById('year').textContent = new Date().getFullYear();
+  document.querySelector('.nav-cta').innerHTML = WL_WHATSAPP_ICON + 'WhatsApp';
+
+  const { categoryOrder, categoryLabels, products } = WL_DATA;
+
+  // Agrupar productos por categoría, en el orden definido
+  const byCategory = {};
+  categoryOrder.forEach(slug => byCategory[slug] = []);
+  products.forEach(p => { (byCategory[p.category] = byCategory[p.category] || []).push(p); });
+
+  function waLink(product) {
+    const texto = `Hola, quiero consultar precio y disponibilidad de: ${product.name}${product.size ? ' ' + product.size : ''}`;
+    return `https://wa.me/5493764820457?text=${encodeURIComponent(texto)}`;
+  }
+
+  function productCard(p) {
+    return `
+      <div class="product-card" data-name="${p.name.toLowerCase()}" data-cat="${p.category}">
+        <div class="p-head">
+          <h3>${p.name}</h3>
+          ${p.size ? `<span class="size-badge">${p.size}</span>` : ''}
+        </div>
+        <p class="p-desc">${p.desc || ''}</p>
+        <a class="p-cta" href="${waLink(p)}" target="_blank" rel="noopener">
+          ${WL_WHATSAPP_ICON} Consultar por WhatsApp
+        </a>
+      </div>`;
+  }
+
+  // Tabs de categoría
+  const tabsWrap = document.querySelector('#catTabs .wrap');
+  categoryOrder.forEach(slug => {
+    const a = document.createElement('a');
+    a.href = '#' + slug;
+    a.className = 'cat-tab';
+    a.dataset.slug = slug;
+    a.innerHTML = `${WL_ICONS[slug] || ''} ${categoryLabels[slug]}`;
+    tabsWrap.appendChild(a);
+  });
+
+  // Secciones de catálogo
+  const root = document.getElementById('catalogRoot');
+  categoryOrder.forEach(slug => {
+    const items = byCategory[slug] || [];
+    if (!items.length) return;
+    const section = document.createElement('section');
+    section.className = 'cat-section wrap';
+    section.id = slug;
+    section.innerHTML = `
+      <div class="cat-section-head">
+        <span class="icon">${WL_ICONS[slug] || ''}</span>
+        <h2>${categoryLabels[slug]}</h2>
+        <span class="count">· ${items.length} producto${items.length === 1 ? '' : 's'}</span>
+      </div>
+      <div class="product-grid">${items.map(productCard).join('')}</div>
+    `;
+    root.appendChild(section);
+  });
+
+  // Footer: categorías
+  const footerCats = document.getElementById('footerCats');
+  categoryOrder.forEach(slug => {
+    const li = document.createElement('li');
+    li.innerHTML = `<a href="#${slug}">${categoryLabels[slug]}</a>`;
+    footerCats.appendChild(li);
+  });
+
+  // Tab activo según scroll
+  const tabs = Array.from(document.querySelectorAll('.cat-tab'));
+  const sections = categoryOrder.map(slug => document.getElementById(slug)).filter(Boolean);
+
+  function setActiveTab(slug) {
+    tabs.forEach(t => t.classList.toggle('active', t.dataset.slug === slug));
+  }
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) setActiveTab(entry.target.id);
+    });
+  }, { rootMargin: '-140px 0px -70% 0px' });
+
+  sections.forEach(s => observer.observe(s));
+  if (sections[0]) setActiveTab(sections[0].id);
+
+  // Búsqueda
+  const searchInput = document.getElementById('searchInput');
+  const searchCount = document.getElementById('searchCount');
+  const noResults = document.getElementById('noResults');
+  const allCards = () => Array.from(document.querySelectorAll('.product-card'));
+
+  function applySearch() {
+    const q = searchInput.value.trim().toLowerCase();
+    let visible = 0;
+    allCards().forEach(card => {
+      const match = !q || card.dataset.name.includes(q);
+      card.style.display = match ? '' : 'none';
+      if (match) visible++;
+    });
+    sections.forEach(section => {
+      const anyVisible = Array.from(section.querySelectorAll('.product-card')).some(c => c.style.display !== 'none');
+      section.style.display = anyVisible ? '' : 'none';
+    });
+    noResults.classList.toggle('show', visible === 0);
+    searchCount.textContent = q ? `${visible} resultado${visible === 1 ? '' : 's'}` : '';
+  }
+
+  searchInput.addEventListener('input', applySearch);
+</script>
+</body>
+</html>
