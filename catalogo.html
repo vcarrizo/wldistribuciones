@@ -1,6 +1,15 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=AW-993868494"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'AW-993868494');
+</script>
+
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Catálogo de productos — WL Distribuciones</title>
@@ -181,6 +190,16 @@
   }
 
   searchInput.addEventListener('input', applySearch);
+</script>
+<!-- Conversión Google Ads: clic en WhatsApp -->
+<script>
+  // Reemplazá ETIQUETA por la etiqueta de la acción de conversión "Clic en WhatsApp"
+  var WL_WA_CONVERSION = 'AW-993868494/ETIQUETA';
+  document.addEventListener('click', function (e) {
+    var link = e.target.closest && e.target.closest('a[href*="wa.me"]');
+    if (!link || WL_WA_CONVERSION.indexOf('ETIQUETA') !== -1) return;
+    gtag('event', 'conversion', { send_to: WL_WA_CONVERSION });
+  });
 </script>
 </body>
 </html>
