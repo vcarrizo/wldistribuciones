@@ -8,6 +8,7 @@
   function gtag(){dataLayer.push(arguments);}
   gtag('js', new Date());
   gtag('config', 'AW-993868494');
+  gtag('config', 'G-1GCR7L5BYD');
 </script>
 
 <meta charset="UTF-8">
@@ -198,6 +199,18 @@
     var link = e.target.closest && e.target.closest('a[href*="wa.me"]');
     if (!link) return;
     gtag('event', 'conversion', { send_to: WL_WA_CONVERSION, value: 1.0, currency: 'ARS' });
+    var card = link.closest('.product-card');
+    var ubicacion = link.classList.contains('nav-cta') ? 'encabezado'
+      : card ? 'producto'
+      : link.closest('.site-footer') ? 'pie'
+      : link.closest('.hero') ? 'portada'
+      : 'otro';
+    gtag('event', 'clic_whatsapp', {
+      send_to: 'G-1GCR7L5BYD',
+      pagina: location.pathname,
+      ubicacion: ubicacion,
+      producto: card ? card.querySelector('h3').textContent.trim() : ''
+    });
   });
 </script>
 </body>
