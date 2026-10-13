@@ -16,6 +16,14 @@
 <title>Catálogo de productos — WL Distribuciones</title>
 <meta name="description" content="Catálogo completo de WL Distribuciones: detergentes, desengrasantes, lavandina, químicos de pileta, limpieza automotor y más. Consultá precio por WhatsApp.">
 <link rel="stylesheet" href="styles.css">
+<style>
+  .size-options { display:flex; flex-wrap:wrap; gap:6px; margin:4px 0 10px; }
+  .size-chip { font:inherit; font-size:.8rem; font-weight:600; line-height:1; padding:6px 10px; border-radius:999px;
+    border:1px solid currentColor; background:transparent; color:inherit; opacity:.75; cursor:pointer; }
+  .size-chip:hover { opacity:1; }
+  .size-chip.active { opacity:1; background:var(--magenta, #c2185b); border-color:var(--magenta, #c2185b); color:#fff; }
+  .size-label { font-size:.75rem; opacity:.7; margin:0; }
+</style>
 </head>
 <body>
 
@@ -39,7 +47,7 @@
 <section class="catalog-intro">
   <div class="wrap">
     <h1>Catálogo de productos</h1>
-    <p class="lead">85 productos organizados en 9 categorías. Elegí lo que necesitás y consultá precio y disponibilidad directo por WhatsApp — no vendemos online todavía, pero coordinamos la compra en minutos.</p>
+    <p class="lead"><span id="totalProductos">85</span> productos organizados en 9 categorías. Elegí lo que necesitás y consultá precio y disponibilidad directo por WhatsApp — no vendemos online todavía, pero coordinamos la compra en minutos.</p>
     <div class="search-row">
       <input type="text" class="search-input" id="searchInput" placeholder="Buscar producto, por ejemplo: lavandina, jabón, pileta…" autocomplete="off">
       <span class="search-count" id="searchCount"></span>
@@ -90,24 +98,66 @@
   const { categoryOrder, categoryLabels, products } = WL_DATA;
 
   // Agrupar productos por categoría, en el orden definido
+
+  // ── Agrupar presentaciones del mismo producto en una sola tarjeta ──
+  const SIZE_RE = /\b(?:x\s*)?\d+(?:[.,]\d+)?\s*(?:cc|cm3|ml|mL|lts?|l|litros?|kgs?|kg|grs?|g|u|un|unid(?:ades)?)\b\.?/gi;
+  function sizeKey(s) {
+    const m = String(s || '').toLowerCase().replace(',', '.').match(/(\d+(?:\.\d+)?)\s*([a-z0-9]*)/);
+    if (!m) return Infinity;
+    const n = parseFloat(m[1]), u = m[2];
+    if (/^(l|lt|lts|litro|litros|kg|kgs)$/.test(u)) return n * 1000;
+    return n;
+  }
+  function baseName(name) {
+    return String(name).replace(SIZE_RE, ' ').replace(/\s*[-–x·,]\s*$/i, '').replace(/\s{2,}/g, ' ').trim();
+  }
+  function groupProducts(list) {
+    const map = new Map();
+    list.forEach(p => {
+      const base = baseName(p.name);
+      const key = p.category + '|' + base.toLowerCase();
+      const fromName = (String(p.name).match(SIZE_RE) || []).map(s => s.replace(/^x\s*/i, '').trim());
+      const sizes = p.size ? [p.size] : fromName;
+      if (!map.has(key)) map.set(key, { name: base, category: p.category, desc: p.desc || '', sizes: [] });
+      const g = map.get(key);
+      if (!g.desc && p.desc) g.desc = p.desc;
+      sizes.forEach(s => { if (!g.sizes.some(x => x.toLowerCase() === s.toLowerCase())) g.sizes.push(s); });
+    });
+    map.forEach(g => g.sizes.sort((a, b) => sizeKey(a) - sizeKey(b)));
+    return Array.from(map.values());
+  }
+  function listaPresentaciones(sizes) {
+    if (sizes.length <= 1) return sizes.join('');
+    return sizes.slice(0, -1).join(', ') + ' y ' + sizes[sizes.length - 1];
+  }
+
+  const grouped = groupProducts(products);
+  document.getElementById('totalProductos').textContent = grouped.length;
   const byCategory = {};
   categoryOrder.forEach(slug => byCategory[slug] = []);
-  products.forEach(p => { (byCategory[p.category] = byCategory[p.category] || []).push(p); });
+  grouped.forEach(p => { (byCategory[p.category] = byCategory[p.category] || []).push(p); });
 
-  function waLink(product) {
-    const texto = `Hola, quiero consultar precio y disponibilidad de: ${product.name}${product.size ? ' ' + product.size : ''}`;
+  function waLink(name, sizes) {
+    const pres = sizes.length ? ` (${listaPresentaciones(sizes)})` : '';
+    const texto = `Hola, quiero consultar precio y disponibilidad de: ${name}${pres}`;
     return `https://wa.me/5493765061855?text=${encodeURIComponent(texto)}`;
   }
 
   function productCard(p) {
+    const multi = p.sizes.length > 1;
+    const sizesHtml = !p.sizes.length ? ''
+      : multi ? `<p class="size-label">Presentaciones (tocá una para consultar solo esa):</p>
+          <div class="size-options">${p.sizes.map(sz => `<button type="button" class="size-chip" data-size="${sz}">${sz}</button>`).join('')}</div>`
+      : `<div class="size-options"><span class="size-badge">${p.sizes[0]}</span></div>`;
     return `
-      <div class="product-card" data-name="${p.name.toLowerCase()}" data-cat="${p.category}">
+      <div class="product-card" data-name="${(p.name + ' ' + p.sizes.join(' ')).toLowerCase()}" data-cat="${p.category}"
+           data-product="${p.name.replace(/"/g, '&quot;')}" data-sizes="${p.sizes.join('|')}">
         <div class="p-head">
           <h3>${p.name}</h3>
-          ${p.size ? `<span class="size-badge">${p.size}</span>` : ''}
         </div>
+        ${sizesHtml}
         <p class="p-desc">${p.desc || ''}</p>
-        <a class="p-cta" href="${waLink(p)}" target="_blank" rel="noopener">
+        <a class="p-cta" href="${waLink(p.name, p.sizes)}" target="_blank" rel="noopener">
           ${WL_WHATSAPP_ICON} Consultar por WhatsApp
         </a>
       </div>`;
@@ -141,6 +191,20 @@
       <div class="product-grid">${items.map(productCard).join('')}</div>
     `;
     root.appendChild(section);
+  });
+
+  // Selección de presentación: actualiza el mensaje de WhatsApp de la tarjeta
+  root.addEventListener('click', e => {
+    const chip = e.target.closest('.size-chip');
+    if (!chip) return;
+    const card = chip.closest('.product-card');
+    const all = card.dataset.sizes.split('|');
+    const wasActive = chip.classList.contains('active');
+    card.querySelectorAll('.size-chip').forEach(c => c.classList.remove('active'));
+    if (wasActive) { delete card.dataset.selected; }
+    else { chip.classList.add('active'); card.dataset.selected = chip.dataset.size; }
+    const sizes = wasActive ? all : [chip.dataset.size];
+    card.querySelector('.p-cta').href = waLink(card.dataset.product, sizes);
   });
 
   // Footer: categorías
@@ -192,7 +256,7 @@
 
   searchInput.addEventListener('input', applySearch);
 </script>
-<!-- Conversión Google Ads: clic en WhatsApp -->
+<!-- Conversión Google Ads + evento Analytics: clic en WhatsApp -->
 <script>
   var WL_WA_CONVERSION = 'AW-993868494/o7L7CO6g8YodEM719NkD';
   document.addEventListener('click', function (e) {
@@ -209,7 +273,8 @@
       send_to: 'G-1GCR7L5BYD',
       pagina: location.pathname,
       ubicacion: ubicacion,
-      producto: card ? card.querySelector('h3').textContent.trim() : ''
+      producto: card ? card.querySelector('h3').textContent.trim() : '',
+      presentacion: card ? (card.dataset.selected || 'todas') : ''
     });
   });
 </script>

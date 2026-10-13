@@ -58,7 +58,7 @@
         <h2>Categorías</h2>
         <p class="desc">Elegí una categoría para ver los productos disponibles y consultar precio directo por WhatsApp.</p>
       </div>
-      <p class="section-note">85 productos activos en catálogo</p>
+      <p class="section-note"><span id="totalProductos">85</span> productos activos en catálogo</p>
     </div>
     <div class="cat-grid" id="categoryGrid"></div>
   </div>
@@ -165,8 +165,43 @@
   document.querySelector('.nav-cta').innerHTML = WL_WHATSAPP_ICON + 'WhatsApp';
 
   // Conteo de productos por categoría
+
+  // ── Agrupar presentaciones del mismo producto en una sola tarjeta ──
+  const SIZE_RE = /\b(?:x\s*)?\d+(?:[.,]\d+)?\s*(?:cc|cm3|ml|mL|lts?|l|litros?|kgs?|kg|grs?|g|u|un|unid(?:ades)?)\b\.?/gi;
+  function sizeKey(s) {
+    const m = String(s || '').toLowerCase().replace(',', '.').match(/(\d+(?:\.\d+)?)\s*([a-z0-9]*)/);
+    if (!m) return Infinity;
+    const n = parseFloat(m[1]), u = m[2];
+    if (/^(l|lt|lts|litro|litros|kg|kgs)$/.test(u)) return n * 1000;
+    return n;
+  }
+  function baseName(name) {
+    return String(name).replace(SIZE_RE, ' ').replace(/\s*[-–x·,]\s*$/i, '').replace(/\s{2,}/g, ' ').trim();
+  }
+  function groupProducts(list) {
+    const map = new Map();
+    list.forEach(p => {
+      const base = baseName(p.name);
+      const key = p.category + '|' + base.toLowerCase();
+      const fromName = (String(p.name).match(SIZE_RE) || []).map(s => s.replace(/^x\s*/i, '').trim());
+      const sizes = p.size ? [p.size] : fromName;
+      if (!map.has(key)) map.set(key, { name: base, category: p.category, desc: p.desc || '', sizes: [] });
+      const g = map.get(key);
+      if (!g.desc && p.desc) g.desc = p.desc;
+      sizes.forEach(s => { if (!g.sizes.some(x => x.toLowerCase() === s.toLowerCase())) g.sizes.push(s); });
+    });
+    map.forEach(g => g.sizes.sort((a, b) => sizeKey(a) - sizeKey(b)));
+    return Array.from(map.values());
+  }
+  function listaPresentaciones(sizes) {
+    if (sizes.length <= 1) return sizes.join('');
+    return sizes.slice(0, -1).join(', ') + ' y ' + sizes[sizes.length - 1];
+  }
+
+  const grouped = groupProducts(WL_DATA.products);
+  document.getElementById('totalProductos').textContent = grouped.length;
   const counts = {};
-  WL_DATA.products.forEach(p => { counts[p.category] = (counts[p.category] || 0) + 1; });
+  grouped.forEach(p => { counts[p.category] = (counts[p.category] || 0) + 1; });
 
   // Mosaico del hero: un tile por categoría (icono grande, sin texto)
   const mosaic = document.getElementById('heroMosaic');
@@ -198,7 +233,7 @@
     footerCats.appendChild(li);
   });
 </script>
-<!-- Conversión Google Ads: clic en WhatsApp -->
+<!-- Conversión Google Ads + evento Analytics: clic en WhatsApp -->
 <script>
   var WL_WA_CONVERSION = 'AW-993868494/o7L7CO6g8YodEM719NkD';
   document.addEventListener('click', function (e) {
@@ -215,7 +250,8 @@
       send_to: 'G-1GCR7L5BYD',
       pagina: location.pathname,
       ubicacion: ubicacion,
-      producto: card ? card.querySelector('h3').textContent.trim() : ''
+      producto: card ? card.querySelector('h3').textContent.trim() : '',
+      presentacion: card ? (card.dataset.selected || 'todas') : ''
     });
   });
 </script>
