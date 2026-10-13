@@ -89,7 +89,7 @@ const WL_DATA = {
       "desc": "Lavandina en gel de adherencia vertical, ideal para desinfectar y blanquear superficies sin escurrir."
     },
     {
-      "name": "WL Revividor de Neumático",
+      "name": "WL Revividor de Neumáticos",
       "size": "1L",
       "category": "automotor",
       "desc": "Revividor de neumáticos que renueva el color negro y protege el caucho del desgaste."
@@ -383,7 +383,7 @@ const WL_DATA = {
       "desc": "Regulador de pH- para piletas, reduce el pH del agua a su nivel óptimo para un tratamiento eficaz."
     },
     {
-      "name": "WL Líquido Quitasarro",
+      "name": "WL Quitasarro",
       "size": "1L",
       "category": "desengrasantes",
       "desc": "Removedor líquido de sarro para griferías, azulejos y sanitarios, de acción rápida."
@@ -503,7 +503,7 @@ const WL_DATA = {
       "desc": "Suavizante para ropa que deja las prendas suaves al tacto y con aroma fresco por más tiempo."
     },
     {
-      "name": "WL Cera Roja",
+      "name": "WL Cera Autobrillo Roja",
       "size": "5L",
       "category": "superficies",
       "desc": "Cera de tono rojo para pisos, aporta color, brillo y protección sin necesidad de lustrar."
