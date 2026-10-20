@@ -149,6 +149,34 @@ p { margin: 0; }
 
 .nav-cta svg { width: 16px; height: 16px; }
 
+.nav-ig {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 38px;
+  height: 38px;
+  border-radius: var(--radius-s);
+  border: 1px solid var(--line-on-ink);
+}
+
+.nav-ig svg { width: 19px; height: 19px; }
+.nav-ig:hover { border-color: rgba(255, 255, 255, 0.5); }
+
+.footer-ig { display: inline-flex; align-items: center; gap: 7px; }
+.footer-ig svg { width: 16px; height: 16px; }
+.nav-cta svg, .nav-ig svg { flex-shrink: 0; }
+.logo { white-space: nowrap; }
+
+@media (max-width: 480px) {
+  .main-nav { gap: 8px; }
+  .logo { gap: 8px; font-size: 0.98rem; }
+  .logo-mark { width: 38px; height: 38px; }
+  .nav-ig { width: 36px; height: 36px; }
+  .site-header .wrap { padding: 0 16px; }
+  .main-nav .nav-cta { padding: 0; gap: 0; width: 38px; height: 38px; justify-content: center; font-size: 0; overflow: hidden; }
+  .nav-cta svg { width: 20px; height: 20px; }
+}
+
 .nav-toggle { display: none; }
 
 /* ---------- Buttons ---------- */
