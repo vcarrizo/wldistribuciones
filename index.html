@@ -18,7 +18,7 @@
 <link rel="icon" type="image/png" sizes="32x32" href="img/favicon-32.png">
 <link rel="icon" type="image/png" sizes="192x192" href="img/icon-192.png">
 <link rel="apple-touch-icon" href="img/apple-touch-icon.png">
-<link rel="stylesheet" href="styles.css?v=20261020">
+<link rel="stylesheet" href="styles.css?v=20261020b">
 </head>
 <body>
 
@@ -53,6 +53,7 @@
       </div>
     </div>
     <div class="hero-mosaic" id="heroMosaic"></div>
+    <div class="promo-slider" id="promoSlider" hidden></div>
   </div>
 </section>
 
@@ -165,6 +166,7 @@
 
 <script src="icons.js"></script>
 <script src="products-data.js"></script>
+<script src="promos.js?v=20261020"></script>
 <script>
   document.getElementById('year').textContent = new Date().getFullYear();
 
@@ -219,6 +221,75 @@
     mosaic.appendChild(tile);
   });
 
+  // Promociones de la semana: reemplazan al mosaico mientras haya alguna vigente
+  (function () {
+    const hoy = new Date(); hoy.setHours(0, 0, 0, 0);
+    const vigentes = (typeof WL_PROMOS !== 'undefined' ? WL_PROMOS : []).filter(p => {
+      if (!p || !p.imagen) return false;
+      if (!p.hasta) return true;
+      const [a, m, d] = String(p.hasta).split('-').map(Number);
+      return new Date(a, m - 1, d) >= hoy;
+    });
+    if (!vigentes.length) return;
+
+    const esc = t => String(t || '').replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+    const waPromo = p => 'https://wa.me/5493765061855?text=' + encodeURIComponent(
+      'Hola, vi en la web la promo' + (p.titulo ? ': ' + p.titulo : ' de la semana') + '. ¿Me pasan más info?');
+
+    const slider = document.getElementById('promoSlider');
+    const multi = vigentes.length > 1;
+    slider.innerHTML = `
+      <div class="promo-head"><h2>Promos de la semana</h2>${multi ? `<span>${vigentes.length} promociones</span>` : ''}</div>
+      <div class="promo-viewport">
+        <div class="promo-track">
+          ${vigentes.map((p, i) => `
+            <a class="promo-slide" href="${waPromo(p)}" target="_blank" rel="noopener" data-promo="${esc(p.titulo)}">
+              <img src="${esc(p.imagen)}" alt="${esc(p.titulo || 'Promoción de la semana')}" ${i ? 'loading="lazy"' : ''}>
+            </a>`).join('')}
+        </div>
+        ${multi ? '<button type="button" class="promo-arrow prev" aria-label="Promo anterior">‹</button><button type="button" class="promo-arrow next" aria-label="Promo siguiente">›</button>' : ''}
+      </div>
+      <div class="promo-foot">
+        <div class="promo-dots">${multi ? vigentes.map((_, i) => `<button type="button" aria-label="Ver promo ${i + 1}"></button>`).join('') : ''}</div>
+        <a class="promo-cta" href="${waPromo(vigentes[0])}" target="_blank" rel="noopener">${WL_WHATSAPP_ICON} Consultar esta promo</a>
+      </div>`;
+    mosaic.hidden = true;
+    mosaic.style.display = 'none';
+    slider.hidden = false;
+
+    const track = slider.querySelector('.promo-track');
+    const dots = [...slider.querySelectorAll('.promo-dots button')];
+    const cta = slider.querySelector('.promo-cta');
+    let actual = 0, timer = null;
+
+    function ir(i) {
+      actual = (i + vigentes.length) % vigentes.length;
+      track.style.transform = `translateX(-${actual * 100}%)`;
+      dots.forEach((d, j) => d.classList.toggle('active', j === actual));
+      cta.href = waPromo(vigentes[actual]);
+      cta.dataset.promo = vigentes[actual].titulo || '';
+    }
+    function auto() {
+      clearInterval(timer);
+      if (multi && !matchMedia('(prefers-reduced-motion: reduce)').matches) timer = setInterval(() => ir(actual + 1), 5000);
+    }
+    ir(0);
+    if (!multi) return;
+    slider.querySelector('.prev').addEventListener('click', () => { ir(actual - 1); auto(); });
+    slider.querySelector('.next').addEventListener('click', () => { ir(actual + 1); auto(); });
+    dots.forEach((d, j) => d.addEventListener('click', () => { ir(j); auto(); }));
+    slider.addEventListener('mouseenter', () => clearInterval(timer));
+    slider.addEventListener('mouseleave', auto);
+    let x0 = null;
+    track.addEventListener('touchstart', e => { x0 = e.touches[0].clientX; }, { passive: true });
+    track.addEventListener('touchend', e => {
+      if (x0 === null) return;
+      const dx = e.changedTouches[0].clientX - x0; x0 = null;
+      if (Math.abs(dx) > 40) { ir(actual + (dx < 0 ? 1 : -1)); auto(); }
+    });
+    auto();
+  })();
+
   // Grilla de categorías
   const grid = document.getElementById('categoryGrid');
   const footerCats = document.getElementById('footerCats');
@@ -250,6 +321,7 @@
     var card = link.closest('.product-card');
     var ubicacion = link.classList.contains('nav-cta') ? 'encabezado'
       : card ? 'producto'
+      : link.closest('.promo-slider') ? 'promo'
       : link.closest('.site-footer') ? 'pie'
       : link.closest('.hero') ? 'portada'
       : 'otro';
@@ -257,7 +329,7 @@
       send_to: 'G-1GCR7L5BYD',
       pagina: location.pathname,
       ubicacion: ubicacion,
-      producto: card ? card.querySelector('h3').textContent.trim() : '',
+      producto: card ? card.querySelector('h3').textContent.trim() : (link.dataset.promo || ''),
       presentacion: card ? (card.dataset.selected || 'todas') : ''
     });
   });
