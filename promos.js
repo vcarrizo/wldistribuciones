@@ -14,5 +14,6 @@
    ========================================================== */
 
 const WL_PROMOS = [
+  { imagen: 'promos/papel-higienico-fofinho.jpg', titulo: 'Papel higiénico Fofinho pack 24 rollos x 30 m a $9.500', hasta: '2026-10-25' },
   // { imagen: 'promos/detergente-eco.jpg', titulo: 'Detergente Eco 5L', hasta: '2026-10-26' },
 ];
