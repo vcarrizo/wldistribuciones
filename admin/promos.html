@@ -223,7 +223,7 @@
     return r.status === 204 ? {} : r.json();
   }
   const errTexto = e => e.status === 401 ? 'La clave no es válida o venció. Generá una nueva en GitHub.'
-    : e.status === 403 ? 'La clave no tiene permiso para modificar la web. Revisá que tenga Contents en "Read and write" sobre wldistribuciones.'
+    : (e.status === 403 || e.status === 404) ? 'La clave no tiene permiso para modificar la web. Revisá en GitHub que tenga acceso al repositorio wldistribuciones y Contents en "Read and write".' + (e.message ? ' (GitHub dice: ' + e.message + ')' : '')
     : e.status === 409 ? 'Alguien más modificó las promos al mismo tiempo. Recargá la página y volvé a intentar.'
     : 'No se pudo completar: ' + e.message;
 
@@ -234,7 +234,11 @@
     $('connectBtn').disabled = true; aviso('Conectando…');
     try {
       const repo = await gh('');
-      if (!repo.permissions || !repo.permissions.push) throw Object.assign(new Error(''), { status: 403 });
+      // Las claves "fine-grained" no siempre informan permisos acá: solo se rechaza si GitHub dice explícitamente que no hay escritura.
+      // Si la clave no puede escribir, el error aparece al publicar, con el detalle de GitHub.
+      if (repo.permissions && repo.permissions.push === false && repo.permissions.admin === false && repo.permissions.maintain !== true) {
+        throw Object.assign(new Error('sin permiso de escritura'), { status: 403 });
+      }
       try { recordar ? localStorage.setItem(KEY, token) : localStorage.removeItem(KEY); } catch (e) {}
       await cargar();
       $('loginCard').hidden = true; $('editor').hidden = false; $('pubbar').hidden = false;
