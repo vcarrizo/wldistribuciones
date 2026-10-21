@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Promos de la semana — Administración WL</title>
+<link rel="icon" type="image/png" sizes="32x32" href="../img/favicon-32.png">
+<style>
+  :root {
+    --ink: #101a2e; --ink-soft: #1b2740; --paper: #f5f6f4; --raised: #fff;
+    --text: #3c4452; --muted: #6b7280; --line: #dcdfe3;
+    --magenta: #d6337d; --violet: #5b3fa6; --ok: #0b6b2e; --ok-soft: #daeee2;
+    --warn: #8a5a00; --warn-soft: #fdf0d5; --err: #b42318; --err-soft: #fde4e1;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--paper); color: var(--text); font: 15px/1.5 Inter, system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif; }
+  header { background: var(--ink); color: #fff; }
+  header .wrap { display: flex; align-items: center; justify-content: space-between; gap: 12px; height: 64px; }
+  .brand { display: flex; align-items: center; gap: 10px; color: #fff; text-decoration: none; font-weight: 700; }
+  .brand span.m { width: 38px; height: 38px; background: #fff; border-radius: 8px; padding: 5px; display: flex; }
+  .brand img { width: 100%; height: 100%; object-fit: contain; }
+  .brand small { font-weight: 400; color: rgba(255,255,255,.6); }
+  header a.site { color: rgba(255,255,255,.8); font-size: .9rem; }
+  .wrap { max-width: 980px; margin: 0 auto; padding: 0 20px; }
+  main { padding: 32px 0 64px; }
+  h1 { color: var(--ink); font-size: 1.6rem; margin: 0 0 4px; }
+  h2 { color: var(--ink); font-size: 1.1rem; margin: 0 0 12px; }
+  p.lead { margin: 0 0 24px; color: var(--muted); }
+  .card { background: var(--raised); border: 1px solid var(--line); border-radius: 8px; padding: 20px; margin-bottom: 20px; }
+  label { display: block; font-size: .8rem; font-weight: 600; color: var(--ink); margin-bottom: 4px; }
+  input[type=text], input[type=password], input[type=date] {
+    width: 100%; font: inherit; padding: 9px 11px; border: 1px solid var(--line); border-radius: 6px; background: #fff; color: var(--ink);
+  }
+  input:focus-visible, button:focus-visible, .drop:focus-visible { outline: 2px solid var(--violet); outline-offset: 2px; }
+  button { font: inherit; cursor: pointer; border-radius: 6px; }
+  .btn { border: 0; background: var(--magenta); color: #fff; font-weight: 600; padding: 10px 18px; }
+  .btn:disabled { opacity: .5; cursor: not-allowed; }
+  .btn.sec { background: transparent; color: var(--ink); border: 1px solid var(--line); }
+  .btn.big { padding: 13px 26px; font-size: 1rem; }
+  .row { display: flex; gap: 10px; align-items: flex-end; flex-wrap: wrap; }
+  .row > .grow { flex: 1 1 260px; }
+  .hint { font-size: .82rem; color: var(--muted); margin: 8px 0 0; }
+  .hint a { color: var(--violet); }
+  .msg { border-radius: 6px; padding: 10px 14px; margin: 0 0 16px; font-size: .92rem; }
+  .msg.ok { background: var(--ok-soft); color: var(--ok); }
+  .msg.err { background: var(--err-soft); color: var(--err); }
+  .msg.info { background: #e8ecf6; color: var(--ink); }
+  .msg:empty { display: none; }
+
+  .drop {
+    border: 2px dashed #b9bfca; border-radius: 10px; background: #fafbfc; padding: 36px 20px; text-align: center; cursor: pointer;
+    transition: border-color .15s, background .15s;
+  }
+  .drop.over { border-color: var(--magenta); background: #fdf1f6; }
+  .drop strong { display: block; color: var(--ink); font-size: 1.05rem; margin-bottom: 4px; }
+  .drop span { color: var(--muted); font-size: .9rem; }
+  .drop svg { width: 40px; height: 40px; color: var(--magenta); margin-bottom: 8px; }
+
+  .list { display: grid; gap: 12px; }
+  .item { display: grid; grid-template-columns: 112px 1fr auto; gap: 16px; align-items: start; border: 1px solid var(--line); border-radius: 8px; padding: 12px; background: #fff; }
+  .item.vencida { background: #fafafa; }
+  .item.vencida img { filter: grayscale(.8); opacity: .6; }
+  .item img { width: 112px; height: 112px; object-fit: cover; border-radius: 6px; background: var(--paper); display: block; }
+  .fields { display: grid; grid-template-columns: 1fr 170px; gap: 10px; }
+  .badges { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 8px; }
+  .badge { font-size: .72rem; font-weight: 700; padding: 2px 8px; border-radius: 999px; }
+  .badge.nueva { background: #fdf1f6; color: var(--magenta); }
+  .badge.vigente { background: var(--ok-soft); color: var(--ok); }
+  .badge.vencida { background: #eceef1; color: var(--muted); }
+  .badge.aviso { background: var(--warn-soft); color: var(--warn); }
+  .actions { display: flex; flex-direction: column; gap: 6px; }
+  .icon { width: 34px; height: 34px; border: 1px solid var(--line); background: #fff; color: var(--ink); display: flex; align-items: center; justify-content: center; font-size: 1rem; }
+  .icon:hover { border-color: var(--ink); }
+  .icon.del:hover { border-color: var(--err); color: var(--err); }
+  .icon:disabled { opacity: .35; cursor: default; }
+  .empty { text-align: center; color: var(--muted); padding: 18px; border: 1px dashed var(--line); border-radius: 8px; }
+  .pubbar { position: sticky; bottom: 0; background: var(--raised); border-top: 1px solid var(--line); padding: 14px 0; box-shadow: 0 -4px 16px rgba(16,26,46,.06); }
+  .pubbar .wrap { display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap; }
+  .pubbar p { margin: 0; font-size: .9rem; color: var(--muted); }
+  .pubbar p b { color: var(--ink); }
+  [hidden] { display: none !important; }
+  details summary { cursor: pointer; color: var(--violet); font-size: .88rem; }
+  details ol { padding-left: 20px; font-size: .88rem; margin: 10px 0 0; }
+  details li { margin-bottom: 4px; }
+  @media (max-width: 640px) {
+    .item { grid-template-columns: 80px 1fr; }
+    .item img { width: 80px; height: 80px; }
+    .fields { grid-template-columns: 1fr; }
+    .actions { grid-column: 1 / -1; flex-direction: row; justify-content: flex-end; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap">
+    <a class="brand" href="../index.html"><span class="m"><img src="../img/logo-wl.png" alt=""></span> WL Distribuciones <small>· Administración</small></a>
+    <a class="site" href="../index.html" target="_blank" rel="noopener">Ver la web ↗</a>
+  </div>
+</header>
+
+<main>
+  <div class="wrap">
+    <h1>Promos de la semana</h1>
+    <p class="lead">Arrastrá las imágenes, poneles nombre y fecha de vencimiento, y tocá <b>Publicar</b>. La portada se actualiza en 1 o 2 minutos.</p>
+
+    <div class="msg" id="msg" role="status" aria-live="polite"></div>
+
+    <!-- Acceso -->
+    <section class="card" id="loginCard">
+      <h2>Conectar con GitHub</h2>
+      <div class="row">
+        <div class="grow">
+          <label for="token">Clave de acceso (token de GitHub)</label>
+          <input type="password" id="token" autocomplete="off" placeholder="github_pat_…">
+        </div>
+        <button class="btn" id="connectBtn" type="button">Conectar</button>
+      </div>
+      <label style="display:flex;align-items:center;gap:8px;font-weight:400;margin-top:12px;font-size:.88rem">
+        <input type="checkbox" id="remember" checked> Recordar en esta computadora
+      </label>
+      <details style="margin-top:14px">
+        <summary>¿Cómo consigo la clave? (se hace una sola vez)</summary>
+        <ol>
+          <li>Entrá a <a href="https://github.com/settings/personal-access-tokens/new" target="_blank" rel="noopener">github.com/settings/personal-access-tokens/new</a> con tu usuario <b>vcarrizo</b>.</li>
+          <li>Nombre: <i>Promos web WL</i>. Vencimiento: el que prefieras (por ejemplo, 1 año).</li>
+          <li>En <b>Repository access</b> elegí <b>Only select repositories</b> → <b>wldistribuciones</b>.</li>
+          <li>En <b>Permissions → Repository permissions</b>, poné <b>Contents</b> en <b>Read and write</b>. Nada más.</li>
+          <li>Tocá <b>Generate token</b>, copiala y pegala acá.</li>
+        </ol>
+        <p class="hint">Esa clave solo puede modificar los archivos de la web. No la compartas; si se filtra, la borrás desde la misma página de GitHub y generás otra.</p>
+      </details>
+    </section>
+
+    <!-- Editor -->
+    <div id="editor" hidden>
+      <section class="card">
+        <h2>Agregar promos</h2>
+        <div class="drop" id="drop" tabindex="0" role="button" aria-label="Subir imágenes de promociones">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 16V4M7 9l5-5 5 5"/><path d="M4 15v3a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-3"/></svg>
+          <strong>Arrastrá las imágenes acá</strong>
+          <span>o hacé clic para elegirlas · JPG o PNG, ideal cuadradas (1080 × 1080)</span>
+        </div>
+        <input type="file" id="fileInput" accept="image/*" multiple hidden>
+      </section>
+
+      <section class="card">
+        <div class="row" style="justify-content:space-between;align-items:center;margin-bottom:12px">
+          <h2 style="margin:0">Promos cargadas</h2>
+          <button class="btn sec" id="cleanBtn" type="button" hidden>Quitar las vencidas</button>
+        </div>
+        <div class="list" id="list"></div>
+        <p class="hint">El orden de la lista es el orden en que aparecen en la portada. Las vencidas no se muestran en la web.</p>
+      </section>
+
+      <p class="hint" style="text-align:right"><button class="btn sec" id="logoutBtn" type="button" style="padding:6px 12px;font-size:.82rem">Desconectar</button></p>
+    </div>
+  </div>
+</main>
+
+<div class="pubbar" id="pubbar" hidden>
+  <div class="wrap">
+    <p id="pubInfo">Sin cambios.</p>
+    <button class="btn big" id="publishBtn" type="button" disabled>Publicar</button>
+  </div>
+</div>
+
+<script>
+(() => {
+  const OWNER = 'vcarrizo', REPO = 'wldistribuciones', BRANCH = 'main';
+  const API = `https://api.github.com/repos/${OWNER}/${REPO}`;
+  const JSON_PATH = 'promos.json', IMG_DIR = 'promos';
+  const MAX_PX = 1080, JPEG_Q = 0.86;
+  const KEY = 'wl_admin_gh_token';
+
+  const $ = id => document.getElementById(id);
+  const msg = $('msg');
+  let token = '';
+  let items = [];          // { imagen, titulo, hasta, nueva?, b64?, preview? }
+  let originales = [];     // imágenes que había al cargar
+  let jsonSha = null;
+  let cambios = false;
+
+  // ---------- utilidades ----------
+  function aviso(texto, tipo = 'info') { msg.className = 'msg ' + tipo; msg.textContent = texto; }
+  function limpiarAviso() { msg.textContent = ''; }
+  const hoy = () => { const d = new Date(); d.setHours(0, 0, 0, 0); return d; };
+  const aFecha = s => { const [a, m, d] = String(s).split('-').map(Number); return new Date(a, m - 1, d); };
+  const iso = d => `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
+  function proximoDomingo() { const d = hoy(); d.setDate(d.getDate() + ((7 - d.getDay()) % 7)); return iso(d); }
+  const vencida = p => p.hasta && aFecha(p.hasta) < hoy();
+  const slug = t => String(t).toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '')
+    .replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '').slice(0, 50) || 'promo';
+  function b64Utf8(str) {
+    const bytes = new TextEncoder().encode(str); let bin = '';
+    for (let i = 0; i < bytes.length; i += 0x8000) bin += String.fromCharCode.apply(null, bytes.subarray(i, i + 0x8000));
+    return btoa(bin);
+  }
+  function utf8B64(b64) {
+    const bin = atob(b64.replace(/\s/g, '')); const bytes = new Uint8Array(bin.length);
+    for (let i = 0; i < bin.length; i++) bytes[i] = bin.charCodeAt(i);
+    return new TextDecoder().decode(bytes);
+  }
+  function marcarCambios() { cambios = true; actualizarBarra(); }
+
+  async function gh(path, opts = {}) {
+    const r = await fetch(API + path, {
+      ...opts,
+      cache: 'no-store',
+      headers: {
+        Authorization: 'Bearer ' + token,
+        Accept: 'application/vnd.github+json',
+        'X-GitHub-Api-Version': '2022-11-28',
+        ...(opts.body ? { 'Content-Type': 'application/json' } : {})
+      }
+    });
+    if (r.status === 404 && opts.allow404) return null;
+    if (!r.ok) {
+      let detalle = ''; try { detalle = (await r.json()).message || ''; } catch (e) {}
+      const err = new Error(detalle || ('Error ' + r.status)); err.status = r.status; throw err;
+    }
+    return r.status === 204 ? {} : r.json();
+  }
+  const errTexto = e => e.status === 401 ? 'La clave no es válida o venció. Generá una nueva en GitHub.'
+    : e.status === 403 ? 'La clave no tiene permiso para modificar la web. Revisá que tenga Contents en "Read and write" sobre wldistribuciones.'
+    : e.status === 409 ? 'Alguien más modificó las promos al mismo tiempo. Recargá la página y volvé a intentar.'
+    : 'No se pudo completar: ' + e.message;
+
+  // ---------- acceso ----------
+  async function conectar(t, recordar) {
+    token = t.trim();
+    if (!token) { aviso('Pegá la clave de acceso.', 'err'); return; }
+    $('connectBtn').disabled = true; aviso('Conectando…');
+    try {
+      const repo = await gh('');
+      if (!repo.permissions || !repo.permissions.push) throw Object.assign(new Error(''), { status: 403 });
+      try { recordar ? localStorage.setItem(KEY, token) : localStorage.removeItem(KEY); } catch (e) {}
+      await cargar();
+      $('loginCard').hidden = true; $('editor').hidden = false; $('pubbar').hidden = false;
+      limpiarAviso();
+    } catch (e) {
+      aviso(errTexto(e), 'err'); token = '';
+    } finally { $('connectBtn').disabled = false; }
+  }
+
+  async function cargar() {
+    const f = await gh(`/contents/${JSON_PATH}?ref=${BRANCH}`, { allow404: true });
+    if (f) {
+      jsonSha = f.sha;
+      try { items = JSON.parse(utf8B64(f.content)); } catch (e) { items = []; }
+    } else { jsonSha = null; items = []; }
+    if (!Array.isArray(items)) items = [];
+    items = items.filter(p => p && p.imagen).map(p => ({ imagen: p.imagen, titulo: p.titulo || '', hasta: p.hasta || '' }));
+    originales = items.map(p => p.imagen);
+    cambios = false;
+    render();
+  }
+
+  // ---------- imágenes ----------
+  async function procesar(file) {
+    const bmp = await createImageBitmap(file);
+    const k = Math.min(1, MAX_PX / Math.max(bmp.width, bmp.height));
+    const w = Math.round(bmp.width * k), h = Math.round(bmp.height * k);
+    const c = document.createElement('canvas'); c.width = w; c.height = h;
+    const ctx = c.getContext('2d'); ctx.fillStyle = '#fff'; ctx.fillRect(0, 0, w, h); ctx.drawImage(bmp, 0, 0, w, h);
+    const dataUrl = c.toDataURL('image/jpeg', JPEG_Q);
+    return { dataUrl, b64: dataUrl.split(',')[1], cuadrada: Math.abs(bmp.width - bmp.height) / Math.max(bmp.width, bmp.height) < 0.03 };
+  }
+
+  async function agregarArchivos(files) {
+    const imgs = [...files].filter(f => f.type.startsWith('image/'));
+    if (!imgs.length) { aviso('Solo se pueden subir imágenes (JPG o PNG).', 'err'); return; }
+    aviso(`Procesando ${imgs.length} imagen${imgs.length > 1 ? 'es' : ''}…`);
+    for (const f of imgs) {
+      try {
+        const r = await procesar(f);
+        const base = f.name.replace(/\.[^.]+$/, '');
+        items.unshift({
+          imagen: '', titulo: '', hasta: proximoDomingo(), nueva: true,
+          b64: r.b64, preview: r.dataUrl, cuadrada: r.cuadrada, nombreArchivo: slug(base)
+        });
+      } catch (e) { aviso(`No se pudo leer "${f.name}".`, 'err'); }
+    }
+    limpiarAviso(); marcarCambios(); render();
+    const primero = document.querySelector('.item input[type=text]'); if (primero) primero.focus();
+  }
+
+  // ---------- lista ----------
+  const esc = t => String(t || '').replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+  function render() {
+    const list = $('list');
+    if (!items.length) {
+      list.innerHTML = '<div class="empty">No hay promos cargadas. Mientras no haya ninguna vigente, la portada muestra el gráfico de categorías.</div>';
+    } else {
+      list.innerHTML = items.map((p, i) => {
+        const venc = vencida(p);
+        const src = p.preview || ('../' + p.imagen + '?t=' + Date.now());
+        return `
+        <div class="item${venc ? ' vencida' : ''}" data-i="${i}">
+          <img src="${esc(src)}" alt="">
+          <div>
+            <div class="fields">
+              <div><label for="t${i}">Nombre de la promo</label>
+                <input type="text" id="t${i}" data-f="titulo" value="${esc(p.titulo)}" placeholder="Ej: Detergente Eco 5L a $4.500"></div>
+              <div><label for="h${i}">Vigente hasta</label>
+                <input type="date" id="h${i}" data-f="hasta" value="${esc(p.hasta)}"></div>
+            </div>
+            <div class="badges">
+              ${p.nueva ? '<span class="badge nueva">Nueva · sin publicar</span>' : ''}
+              ${venc ? '<span class="badge vencida">Vencida · no se muestra</span>' : '<span class="badge vigente">Se muestra en la web</span>'}
+              ${p.nueva && !p.cuadrada ? '<span class="badge aviso">No es cuadrada: se van a recortar los bordes</span>' : ''}
+            </div>
+          </div>
+          <div class="actions">
+            <button type="button" class="icon" data-a="up" title="Subir" aria-label="Subir" ${i === 0 ? 'disabled' : ''}>↑</button>
+            <button type="button" class="icon" data-a="down" title="Bajar" aria-label="Bajar" ${i === items.length - 1 ? 'disabled' : ''}>↓</button>
+            <button type="button" class="icon del" data-a="del" title="Quitar" aria-label="Quitar">✕</button>
+          </div>
+        </div>`;
+      }).join('');
+    }
+    $('cleanBtn').hidden = !items.some(vencida);
+    actualizarBarra();
+  }
+
+  $('list').addEventListener('input', e => {
+    const inp = e.target.closest('input[data-f]'); if (!inp) return;
+    const i = +inp.closest('.item').dataset.i;
+    items[i][inp.dataset.f] = inp.value;
+    marcarCambios();
+    if (inp.dataset.f === 'hasta') render();
+  });
+  $('list').addEventListener('click', e => {
+    const b = e.target.closest('button[data-a]'); if (!b) return;
+    const i = +b.closest('.item').dataset.i;
+    if (b.dataset.a === 'up' && i > 0) [items[i - 1], items[i]] = [items[i], items[i - 1]];
+    if (b.dataset.a === 'down' && i < items.length - 1) [items[i + 1], items[i]] = [items[i], items[i + 1]];
+    if (b.dataset.a === 'del') {
+      if (!confirm('¿Quitar esta promo' + (items[i].titulo ? ` ("${items[i].titulo}")` : '') + '?')) return;
+      items.splice(i, 1);
+    }
+    marcarCambios(); render();
+  });
+  $('cleanBtn').addEventListener('click', () => { items = items.filter(p => !vencida(p)); marcarCambios(); render(); });
+
+  function actualizarBarra() {
+    const nuevas = items.filter(p => p.nueva).length;
+    const vig = items.filter(p => !vencida(p)).length;
+    const faltan = items.filter(p => !p.titulo.trim() || !p.hasta).length;
+    let t = cambios ? '<b>Hay cambios sin publicar.</b> ' : 'Sin cambios. ';
+    t += `${vig} promo${vig === 1 ? '' : 's'} vigente${vig === 1 ? '' : 's'}`;
+    if (nuevas) t += ` · ${nuevas} nueva${nuevas === 1 ? '' : 's'}`;
+    if (faltan) t += ` · <b style="color:var(--err)">completá nombre y fecha de ${faltan === 1 ? 'una promo' : faltan + ' promos'}</b>`;
+    $('pubInfo').innerHTML = t;
+    $('publishBtn').disabled = !cambios || faltan > 0;
+  }
+
+  // ---------- publicar ----------
+  async function publicar() {
+    $('publishBtn').disabled = true;
+    const fecha = iso(hoy()).replace(/-/g, '');
+    try {
+      // 1) Subir imágenes nuevas
+      const nuevas = items.filter(p => p.nueva);
+      for (let n = 0; n < nuevas.length; n++) {
+        const p = nuevas[n];
+        aviso(`Subiendo imagen ${n + 1} de ${nuevas.length}…`);
+        const nombre = `${IMG_DIR}/${slug(p.titulo) || p.nombreArchivo}-${fecha}-${Math.random().toString(36).slice(2, 6)}.jpg`;
+        await gh(`/contents/${nombre}`, {
+          method: 'PUT',
+          body: JSON.stringify({ message: `Promo: agregar imagen "${p.titulo}"`, content: p.b64, branch: BRANCH })
+        });
+        p.imagen = nombre;
+      }
+      // 2) Guardar la lista
+      aviso('Guardando la lista de promos…');
+      const lista = items.map(p => ({ imagen: p.imagen, titulo: p.titulo.trim(), hasta: p.hasta }));
+      const res = await gh(`/contents/${JSON_PATH}`, {
+        method: 'PUT',
+        body: JSON.stringify({
+          message: 'Promos de la semana: actualizar lista', content: b64Utf8(JSON.stringify(lista, null, 2) + '\n'),
+          branch: BRANCH, ...(jsonSha ? { sha: jsonSha } : {})
+        })
+      });
+      jsonSha = res.content.sha;
+      // 3) Borrar del repositorio las imágenes que ya no se usan
+      const enUso = new Set(lista.map(p => p.imagen));
+      const sobran = originales.filter(img => !enUso.has(img) && img.startsWith(IMG_DIR + '/'));
+      for (const img of sobran) {
+        try {
+          const f = await gh(`/contents/${img}?ref=${BRANCH}`, { allow404: true });
+          if (f) await gh(`/contents/${img}`, { method: 'DELETE', body: JSON.stringify({ message: `Promo: quitar imagen ${img}`, sha: f.sha, branch: BRANCH }) });
+        } catch (e) { /* si no se puede borrar una imagen vieja, no afecta a la web */ }
+      }
+      items = lista.map(p => ({ ...p }));
+      originales = lista.map(p => p.imagen);
+      cambios = false; render();
+      aviso('¡Listo! Las promos quedaron publicadas. La portada se actualiza en 1 o 2 minutos.', 'ok');
+    } catch (e) {
+      aviso(errTexto(e), 'err');
+      $('publishBtn').disabled = false;
+    }
+  }
+
+  // ---------- eventos ----------
+  const drop = $('drop'), fileInput = $('fileInput');
+  drop.addEventListener('click', () => fileInput.click());
+  drop.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); fileInput.click(); } });
+  fileInput.addEventListener('change', () => { agregarArchivos(fileInput.files); fileInput.value = ''; });
+  ['dragenter', 'dragover'].forEach(ev => drop.addEventListener(ev, e => { e.preventDefault(); drop.classList.add('over'); }));
+  ['dragleave', 'drop'].forEach(ev => drop.addEventListener(ev, e => { e.preventDefault(); drop.classList.remove('over'); }));
+  drop.addEventListener('drop', e => agregarArchivos(e.dataTransfer.files));
+  // evitar que soltar una imagen fuera de la zona abra la imagen en el navegador
+  window.addEventListener('dragover', e => e.preventDefault());
+  window.addEventListener('drop', e => { e.preventDefault(); if (!$('editor').hidden && !drop.contains(e.target)) agregarArchivos(e.dataTransfer.files); });
+
+  $('connectBtn').addEventListener('click', () => conectar($('token').value, $('remember').checked));
+  $('token').addEventListener('keydown', e => { if (e.key === 'Enter') conectar($('token').value, $('remember').checked); });
+  $('publishBtn').addEventListener('click', publicar);
+  $('logoutBtn').addEventListener('click', () => {
+    if (cambios && !confirm('Tenés cambios sin publicar. ¿Desconectar igual?')) return;
+    try { localStorage.removeItem(KEY); } catch (e) {}
+    location.reload();
+  });
+  window.addEventListener('beforeunload', e => { if (cambios) { e.preventDefault(); e.returnValue = ''; } });
+
+  let guardado = '';
+  try { guardado = localStorage.getItem(KEY) || ''; } catch (e) {}
+  if (guardado) conectar(guardado, true);
+})();
+</script>
+</body>
+</html>

@@ -166,7 +166,6 @@
 
 <script src="icons.js"></script>
 <script src="products-data.js"></script>
-<script src="promos.js?v=20261021"></script>
 <script>
   document.getElementById('year').textContent = new Date().getFullYear();
 
@@ -221,10 +220,16 @@
     mosaic.appendChild(tile);
   });
 
-  // Promociones de la semana: reemplazan al mosaico mientras haya alguna vigente
-  (function () {
+  // Promociones de la semana (promos.json, se cargan desde /admin/promos.html):
+  // reemplazan al mosaico mientras haya alguna vigente
+  fetch('promos.json?t=' + Date.now(), { cache: 'no-store' })
+    .then(r => r.ok ? r.json() : [])
+    .catch(() => [])
+    .then(lista => mostrarPromos(Array.isArray(lista) ? lista : []));
+
+  function mostrarPromos(WL_PROMOS) {
     const hoy = new Date(); hoy.setHours(0, 0, 0, 0);
-    const vigentes = (typeof WL_PROMOS !== 'undefined' ? WL_PROMOS : []).filter(p => {
+    const vigentes = WL_PROMOS.filter(p => {
       if (!p || !p.imagen) return false;
       if (!p.hasta) return true;
       const [a, m, d] = String(p.hasta).split('-').map(Number);
@@ -288,7 +293,7 @@
       if (Math.abs(dx) > 40) { ir(actual + (dx < 0 ? 1 : -1)); auto(); }
     });
     auto();
-  })();
+  }
 
   // Grilla de categorías
   const grid = document.getElementById('categoryGrid');
