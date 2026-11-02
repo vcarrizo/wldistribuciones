@@ -281,7 +281,7 @@ p { margin: 0; }
 
 /* ---------- Promociones de la semana (portada) ---------- */
 
-.promo-slider { position: relative; }
+.promo-slider { position: relative; width: 100%; max-width: 430px; justify-self: center; }
 
 .promo-head {
   display: flex;
@@ -295,7 +295,7 @@ p { margin: 0; }
 
 .promo-viewport {
   position: relative;
-  aspect-ratio: 1;
+  aspect-ratio: 3 / 4;
   border-radius: 6px;
   overflow: hidden;
   background: var(--ink-soft);
@@ -696,7 +696,7 @@ p { margin: 0; }
 @media (max-width: 900px) {
   .hero .wrap { grid-template-columns: 1fr; }
   .hero-mosaic { max-width: 340px; }
-  .promo-slider { max-width: 420px; width: 100%; }
+  .promo-slider { max-width: 400px; width: 100%; justify-self: start; }
   .cat-grid { grid-template-columns: repeat(2, 1fr); }
   .steps { grid-template-columns: 1fr; gap: 24px; }
   .values { grid-template-columns: repeat(2, 1fr); }
