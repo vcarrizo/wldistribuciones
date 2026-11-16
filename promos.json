@@ -1,5 +1,30 @@
 [
   {
+    "imagen": "promos/quitamanchas-1l-20261116-bbqu.jpg",
+    "titulo": "Quitamanchas 1L",
+    "hasta": "2026-11-22"
+  },
+  {
+    "imagen": "promos/lavandina-ropa-blanca-1l-20261116-ld0v.jpg",
+    "titulo": "Lavandina ropa blanca 1L",
+    "hasta": "2026-11-22"
+  },
+  {
+    "imagen": "promos/lavandina-ropa-color-1l-20261116-o4eh.jpg",
+    "titulo": "Lavandina ropa color 1L",
+    "hasta": "2026-11-22"
+  },
+  {
+    "imagen": "promos/limpiador-de-bano-1l-20261116-mksw.jpg",
+    "titulo": "Limpiador de baño 1L",
+    "hasta": "2026-11-22"
+  },
+  {
+    "imagen": "promos/limpiador-de-cocina-1l-20261116-trip.jpg",
+    "titulo": "Limpiador de cocina 1L",
+    "hasta": "2026-11-22"
+  },
+  {
     "imagen": "promos/jabon-eco-lila-x5-20261109-027k.jpg",
     "titulo": "jabon eco lila x5",
     "hasta": "2026-11-15"
