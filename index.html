@@ -18,7 +18,35 @@
 <link rel="icon" type="image/png" sizes="32x32" href="img/favicon-32.png">
 <link rel="icon" type="image/png" sizes="192x192" href="img/icon-192.png">
 <link rel="apple-touch-icon" href="img/apple-touch-icon.png">
-<link rel="stylesheet" href="styles.css?v=20261102">
+<link rel="stylesheet" href="styles.css?v=20261116">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "name": "WL Distribuciones",
+  "legalName": "WL Distribuciones SAS",
+  "url": "https://wldistribuciones.com/",
+  "logo": "https://wldistribuciones.com/img/logo-wl.png",
+  "telephone": "+5493765061855",
+  "sameAs": ["https://www.instagram.com/wl.distribuciones/"],
+  "department": [
+    {
+      "@type": "Store",
+      "name": "WL Limpieza — Local Centro",
+      "telephone": "+5493765061855",
+      "address": { "@type": "PostalAddress", "streetAddress": "Santa Fe 2250", "addressLocality": "Posadas", "addressRegion": "Misiones", "addressCountry": "AR" },
+      "openingHours": ["Mo-Fr 08:00-12:30", "Mo-Fr 15:00-19:00", "Sa 08:00-12:30"]
+    },
+    {
+      "@type": "Store",
+      "name": "WL Limpieza — Local 213",
+      "telephone": "+5493765061855",
+      "address": { "@type": "PostalAddress", "streetAddress": "Av. Alicia Moreau de Justo 6638", "addressLocality": "Posadas", "addressRegion": "Misiones", "addressCountry": "AR" },
+      "openingHours": ["Mo-Fr 09:00-17:00", "Sa 08:00-12:00"]
+    }
+  ]
+}
+</script>
 </head>
 <body>
 
@@ -33,6 +61,7 @@
         <a href="index.html#categorias">Categorías</a>
         <a href="catalogo.html">Catálogo</a>
         <a href="institucional.html">Institucional</a>
+        <a href="index.html#locales">Locales</a>
         <a href="index.html#nosotros">Nosotros</a>
       </div>
       <a href="https://www.instagram.com/wl.distribuciones/" class="nav-ig" target="_blank" rel="noopener" aria-label="Instagram de WL Distribuciones" title="Instagram @wl.distribuciones"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4.2"/><circle cx="17.4" cy="6.6" r="1" fill="currentColor" stroke="none"/></svg></a>
@@ -46,7 +75,7 @@
     <div>
       <div class="eyebrow">Distribución mayorista de productos de limpieza</div>
       <h1>Stock permanente, entrega en Posadas y volumen para tu negocio.</h1>
-      <p class="lead">Abastecemos comercios, empresas de limpieza, hoteles e instituciones de Misiones con más de 80 productos organizados en 9 categorías. Consultá precio y disponibilidad por WhatsApp.</p>
+      <p class="lead">Abastecemos comercios, empresas de limpieza, hoteles e instituciones de Misiones con <span class="js-total-productos">45</span> productos en <span class="js-total-presentaciones">85</span> presentaciones, organizados en 9 categorías. Consultá precio y disponibilidad por WhatsApp o vení a nuestros locales en Posadas.</p>
       <div class="hero-actions">
         <a href="catalogo.html" class="btn btn-solid">Ver catálogo completo</a>
         <a href="https://wa.me/5493765061855?text=Hola%2C%20quiero%20hacer%20una%20consulta" class="btn btn-outline" target="_blank" rel="noopener">Hablar por WhatsApp</a>
@@ -89,7 +118,7 @@
       <div class="step">
         <div class="num">03</div>
         <h3>Coordinamos la entrega</h3>
-        <p>Retiro en depósito o envío a tu comercio, según lo que te quede más cómodo.</p>
+        <p>Retiro en cualquiera de nuestros dos locales de Posadas o envío a tu comercio, según lo que te quede más cómodo.</p>
       </div>
     </div>
   </div>
@@ -100,7 +129,7 @@
     <div class="section-head">
       <div>
         <h2>Por qué comprarle a WL</h2>
-        <p class="desc">Más de 80 productos propios, pensados para uso frecuente en comercios, instituciones y hogares.</p>
+        <p class="desc"><span class="js-total-productos">45</span> productos en <span class="js-total-presentaciones">85</span> presentaciones, pensados para uso frecuente en comercios, instituciones y hogares.</p>
       </div>
     </div>
     <div class="values">
@@ -109,7 +138,7 @@
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 8.2 12 4l8 4.2v7.6L12 20l-8-4.2V8.2Z"/><path d="M4 8.2 12 12l8-4.2M12 12v8"/></svg>
         </div>
         <h3>Stock permanente</h3>
-        <p>Productos propios en las categorías de mayor rotación, sin depender de terceros.</p>
+        <p>Stock en Posadas de los productos de mayor rotación, listo para retirar o enviar.</p>
       </div>
       <div class="value">
         <div class="icon">
@@ -129,10 +158,22 @@
         <div class="icon">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4.3c2.4 3 4.6 5.9 4.6 9a4.6 4.6 0 1 1-9.2 0c0-3.1 2.2-6 4.6-9Z"/></svg>
         </div>
-        <h3>9 categorías</h3>
-        <p>Desde cocina y lavado de ropa hasta químicos de pileta y limpieza automotor.</p>
+        <h3>Dos locales en Posadas</h3>
+        <p>Comprá en el local, retirá tu pedido o consultanos en Santa Fe 2250 y en Av. Alicia Moreau de Justo 6638.</p>
       </div>
     </div>
+  </div>
+</section>
+
+<section class="section section-alt" id="locales">
+  <div class="wrap">
+    <div class="section-head">
+      <div>
+        <h2>Nuestros locales</h2>
+        <p class="desc">Vení a comprar al por mayor o por menor, retirá tu pedido o consultá en persona. Atendemos en dos locales de Posadas.</p>
+      </div>
+    </div>
+    <div class="locales-grid" id="localesGrid"></div>
   </div>
 </section>
 
@@ -153,12 +194,14 @@
         <ul>
           <li><a href="https://wa.me/5493765061855" target="_blank" rel="noopener">WhatsApp: +54 9 3765 06-1855</a></li>
           <li><a href="https://www.instagram.com/wl.distribuciones/" class="footer-ig" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4.2"/><circle cx="17.4" cy="6.6" r="1" fill="currentColor" stroke="none"/></svg>@wl.distribuciones</a></li>
+          <li><a href="index.html#locales">Santa Fe 2250, Posadas</a></li>
+          <li><a href="index.html#locales">Av. Alicia Moreau de Justo 6638, Posadas</a></li>
           <li><a href="catalogo.html">Ver catálogo</a></li>
         </ul>
       </div>
     </div>
     <div class="footer-bottom">
-      <span>© <span id="year"></span> WL Distribuciones</span>
+      <span>© <span id="year"></span> WL Distribuciones SAS · CUIT 30-71719234-2</span>
       <span>Posadas, Misiones, Argentina</span>
     </div>
   </div>
@@ -208,6 +251,36 @@
 
   const grouped = groupProducts(WL_DATA.products);
   document.getElementById('totalProductos').textContent = grouped.length;
+  document.querySelectorAll('.js-total-productos').forEach(el => { el.textContent = grouped.length; });
+  document.querySelectorAll('.js-total-presentaciones').forEach(el => { el.textContent = WL_DATA.products.length; });
+
+  // Locales: datos en WL_LOCALES (más abajo). Para cargar horarios, completá "horarios".
+  const WL_LOCALES = [
+    { nombre: 'Local Centro', direccion: 'Santa Fe 2250', ciudad: 'Posadas, Misiones',
+      horarios: [['Lunes a viernes', '8 a 12:30 y 15 a 19 h'], ['Sábados', '8 a 12:30 h']] },
+    { nombre: 'Local 213', direccion: 'Av. Alicia Moreau de Justo 6638', ciudad: 'Posadas, Misiones',
+      horarios: [['Lunes a viernes', '9 a 17 h (corrido)'], ['Sábados', '8 a 12 h']] },
+  ];
+  const localesGrid = document.getElementById('localesGrid');
+  WL_LOCALES.forEach(l => {
+    const q = encodeURIComponent(l.direccion + ', ' + l.ciudad + ', Argentina');
+    const wa = 'https://wa.me/5493765061855?text=' + encodeURIComponent('Hola, quiero hacer una consulta sobre el ' + l.nombre + ' (' + l.direccion + ').');
+    const card = document.createElement('article');
+    card.className = 'local-card';
+    card.innerHTML = `
+      <div class="local-map"><iframe title="Mapa ${l.nombre}" src="https://www.google.com/maps?q=${q}&output=embed" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe></div>
+      <div class="local-body">
+        <div class="local-tag">WL Limpieza</div>
+        <h3>${l.nombre}</h3>
+        <p class="local-dir">${l.direccion} · ${l.ciudad}</p>
+        ${l.horarios.length ? `<ul class="local-horarios">${l.horarios.map(h => `<li><span>${h[0]}</span><span>${h[1]}</span></li>`).join('')}</ul>` : ''}
+        <div class="local-actions">
+          <a class="btn btn-ink" href="https://www.google.com/maps/dir/?api=1&destination=${q}" target="_blank" rel="noopener">Cómo llegar</a>
+          <a class="local-wa" href="${wa}" target="_blank" rel="noopener" data-promo="${l.nombre}">${WL_WHATSAPP_ICON} Consultar</a>
+        </div>
+      </div>`;
+    localesGrid.appendChild(card);
+  });
   const counts = {};
   grouped.forEach(p => { counts[p.category] = (counts[p.category] || 0) + 1; });
 
@@ -327,6 +400,7 @@
     var ubicacion = link.classList.contains('nav-cta') ? 'encabezado'
       : card ? 'producto'
       : link.closest('.promo-slider') ? 'promo'
+      : link.closest('#locales') ? 'locales'
       : link.closest('.site-footer') ? 'pie'
       : link.closest('.hero') ? 'portada'
       : 'otro';
